@@ -1,6 +1,7 @@
 package com.baek.mapstruct;
 
 import com.baek.mapstruct.dto.OrderDto;
+import com.baek.mapstruct.entity.OrderEntity;
 import com.baek.mapstruct.entity.OrderInfo;
 import com.baek.mapstruct.mapper.OrderMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -102,5 +103,23 @@ class MappingTest {
             "EFG"
           ]
         }
+     */
+
+    /**
+     * 상속 관게에서는 부모, 자식 클래스에서 @Builder 대신 @SuperBuilder 를 사용해야 함
+     */
+    @Test
+    void 상속_테스트() throws JsonProcessingException {
+        OrderEntity entity = OrderEntity.builder().
+                orderName("abc")
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        OrderDto.OrderResponse response = orderMapper.of(entity);
+        log.info("Parsed Dto: {}", objectMapper.writeValueAsString(response));
+    }
+
+    /*
+      {"orderName":"abc","createdAt":"2022-12-04T18:06:18.853126"}
      */
 }

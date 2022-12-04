@@ -32,4 +32,11 @@ public class OrderDto {
         private final String receiverAddress2;
         private final String etcMessage;
     }
+
+    @Getter
+    @Builder
+    public static class OrderResponse {
+        private String orderName;
+        private String createdAt;
+    }
 }
