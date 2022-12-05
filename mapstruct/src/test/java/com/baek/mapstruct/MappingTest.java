@@ -172,6 +172,7 @@ class MappingTest {
         list.add(info);
         list.add(info2);
 
+        // convert
         List<OrderDto.Main> result = orderMapper.of(list);
         log.info("Parsed: {}", objectMapper.writeValueAsString(result));
     }
