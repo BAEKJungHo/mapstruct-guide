@@ -122,4 +122,57 @@ class MappingTest {
     /*
       {"orderName":"abc","createdAt":"2022-12-04T18:06:18.853126"}
      */
+
+    @Test
+    void convertToList() throws JsonProcessingException {
+        List<String> address = new ArrayList<>();
+        address.add("ABC");
+        address.add("EFG");
+
+        List<String> address2 = new ArrayList<>();
+        address.add("abc");
+        address.add("efg");
+
+        OrderInfo.DeliveryInfo deliveryInfo = OrderInfo.DeliveryInfo.builder()
+                .receiverName("baek")
+                .receiverPhone("01012341234")
+                .receiverZipcode("123")
+                .receiverAddress1("신림동")
+                .receiverAddress2("202호")
+                .etcMessage("배송 전 미리 연락 바랍니다.")
+                .build();
+
+        OrderInfo.Main info = OrderInfo.Main.builder()
+                .orderId(1L)
+                .orderTokens("token")
+                .userId(2L)
+                .payMethod("Card")
+                .totalAmount(10000L)
+                .orderedAt(LocalDateTime.now())
+                .status("status")
+                .statusDescription("status123")
+                .address(address)
+                .deliveryInfo(deliveryInfo)
+                .build();
+
+        OrderInfo.Main info2 = OrderInfo.Main.builder()
+                .orderId(1L)
+                .orderTokens("token-2")
+                .userId(2L)
+                .payMethod("Card-2")
+                .totalAmount(20000L)
+                .orderedAt(LocalDateTime.now())
+                .status("status-2")
+                .statusDescription("status456")
+                .address(address2)
+                .deliveryInfo(deliveryInfo)
+                .build();
+
+        List<OrderInfo.Main> list = new ArrayList<>();
+        list.add(info);
+        list.add(info2);
+
+        List<OrderDto.Main> result = orderMapper.of(list);
+        log.info("Parsed: {}", objectMapper.writeValueAsString(result));
+    }
 }
